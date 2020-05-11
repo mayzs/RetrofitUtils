@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+android {
+    compileSdkVersion 29
+
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'org.ligboy.retrofit2:converter-fastjson-parent:2.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    api 'com.alibaba:fastjson:1.2.68'
+}
+publish {
+    userOrg = 'mayzs' //bintray账户下某个组织id
+    groupId = 'com.mayz.retrofitutils' //maven仓库下库的包名，一般为模块包名
+    artifactId = 'RetrofitUtils' //项目名称
+    publishVersion = '1.1.0' //版本号
+    desc = '' //项目介绍，可以不写
+    website = '' //项目主页，可以不写
+}
+allprojects{
+    tasks.withType(Javadoc)  {
+        options.addStringOption('Xdoclint:none',  '-quiet')  //忽略javadoc错误
+        options{ encoding "UTF-8" charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"  }  }
+}
